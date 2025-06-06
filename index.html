@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+
+    <audio id="myAudio1"><source src="beep-01a.wav" type="audio/mpeg"></audio>
+<audio id="myAudio2"><source src="beep-02.wav" type="audio/mpeg"></audio> 
+<audio id="myAudio3"><source src="beep-04.wav" type="audio/mpeg"></audio> 
+    <div class="alert">
+        <p>Klik Untuk Aktivasi ijin Sound</p>
+        <p class="buttons">
+          <button value="0">Tolak</button>
+          <button value="1">Ijinkan</button>
+        </p>
+      </div >
+<p id='data'></p>
+<script src= "clientjs/firebase.js"></script>
+
+<script>
+
+var config = {
+ apiKey: "AIzaSyAO9b_Fkpopy6pPqsaU3s0P3pFOjOT4Rlc",
+    authDomain: "iotku-89833.firebaseapp.com",
+    databaseURL: "https://iotku-89833-default-rtdb.firebaseio.com",
+    projectId: "iotku-89833",
+    storageBucket: "iotku-89833.firebasestorage.app",
+    messagingSenderId: "1032469404715",
+    appId: "1:1032469404715:web:243738efa0bb6901769e6e",
+    measurementId: "G-M8BRB1T181"
+  };
+firebase.initializeApp(config);
+var db = firebase.database();
+var tes = db.ref("/test/int");
+tes.on("value", function(snapshot) {
+            document.getElementById('data').innerHTML=  (snapshot.val());
+            if (snapshot.val()>300){
+                x1.play();
+                
+            }
+            else if (snapshot.val()>200){
+                x2.play();
+            }
+            else if (snapshot.val()>100){
+                x3.play();
+            }
+                });
+
+
+var x1 = document.getElementById("myAudio1"); 
+var x2 = document.getElementById("myAudio2"); 
+var x3 = document.getElementById("myAudio3"); 
+
+const audio = new Audio( 'https://dl.dropboxusercontent.com/s/h8pvqqol3ovyle8/tom.mp3' );
+audio.muted = true;
+const alert_elem = document.querySelector( '.alert' );
+audio.play().then( () => {
+  // already allowed
+  alert_elem.remove();
+  resetAudio();
+} )
+.catch( () => {
+ 
+  alert_elem.addEventListener( 'click', ({ target }) => {
+    if( target.matches('button') ) {
+      const allowed = target.value === "1";
+      if( allowed ) {
+        audio.play()
+          .then( resetAudio );
+      }
+      alert_elem.remove();
+    }
+  } );
+} );
+
+</script>
+</body>
+</html>
