@@ -8,10 +8,12 @@
 </head>
 <body>
 
-    <audio id="myAudio1"><source src="beep-01a.wav" type="audio/mpeg"></audio>
-<audio id="myAudio2"><source src="beep-02.wav" type="audio/mpeg"></audio> 
-<audio id="myAudio3"><source src="beep-04.wav" type="audio/mpeg"></audio> 
-    <div class="alert">
+<audio id="myAudio1"><source src="jarak kurang dari 1 meter.mp3" type="audio/mpeg"></audio>
+<audio id="myAudio2"><source src="jarak kurang dari 2 meter.mp3" type="audio/mpeg"></audio> 
+<audio id="myAudio3"><source src="jarak kurang dari 3 meter.mp3" type="audio/mpeg"></audio> 
+<audio id="myAudio4"><source src="jarak kurang dari 4 meter.mp3" type="audio/mpeg"></audio> 
+
+<div class="alert">
         <p>Klik Untuk Aktivasi ijin Sound</p>
         <p class="buttons">
           <button value="0">Tolak</button>
@@ -38,15 +40,18 @@ var db = firebase.database();
 var tes = db.ref("/test/int");
 tes.on("value", function(snapshot) {
             document.getElementById('data').innerHTML=  (snapshot.val());
-            if (snapshot.val()>300){
+            if (snapshot.val()<100){
                 x1.play();
                 
             }
-            else if (snapshot.val()>200){
+            else if (snapshot.val()<200){
                 x2.play();
             }
-            else if (snapshot.val()>100){
+            else if (snapshot.val()<300){
                 x3.play();
+            }
+            else if (snapshot.val()<400){
+                x4.play();
             }
                 });
 
@@ -54,7 +59,7 @@ tes.on("value", function(snapshot) {
 var x1 = document.getElementById("myAudio1"); 
 var x2 = document.getElementById("myAudio2"); 
 var x3 = document.getElementById("myAudio3"); 
-
+var x4 = document.getElementById("myAudio4"); 
 const audio = new Audio( 'https://dl.dropboxusercontent.com/s/h8pvqqol3ovyle8/tom.mp3' );
 audio.muted = true;
 const alert_elem = document.querySelector( '.alert' );
